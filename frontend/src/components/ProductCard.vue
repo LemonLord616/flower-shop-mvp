@@ -7,11 +7,16 @@
 		</swiper>
 		<h1 @click.stop>{{ product.name }}</h1>
 		<h2 @click.stop>{{ product.price + ' ₽'}}</h2>
+
+		<QuantityControl @click.stop :product="product" />
 	</div>
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
+
+import QuantityControl from '../components/QuantityControl.vue';
+
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/swiper-bundle.css';
 

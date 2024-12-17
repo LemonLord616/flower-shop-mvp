@@ -9,7 +9,6 @@
 				@select="goToProduct(product.id)"
 			/>
 		</div>
-		<router-link to="/">Главная</router-link>
 	</div>
 </template>
 

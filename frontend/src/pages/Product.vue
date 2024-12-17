@@ -9,9 +9,7 @@
 		<h2>{{ product.price + ' ₽'}}</h2>
 		<p>{{ product.description }}</p>
 
-		<button @click="addToCart(product)" class="add-to-cart">Add to Cart</button>
-
-		<router-link to="/catalog" class="catalog-link">Каталог</router-link>
+		<QuantityControl :product="product" />
 	</div>
 	<div v-else>
 		<p>Product not found.</p>
@@ -21,20 +19,21 @@
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { useProductStore } from '../store/products';
-import { useCartStore } from '../store/cartStore';
+import QuantityControl from '../components/QuantityControl.vue';
 
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/swiper-bundle.css';
+
+const route = useRoute();
+const productStore = useProductStore();
+
+const product = productStore.getProductById(Number(route.params.id));
 
 const productImages = computed(() => {
 	return product.images.map(imageName => 
 		new URL(`../assets/product/${imageName}`, import.meta.url).href
 	);
 });
-
-const route = useRoute();
-const productStore = useProductStore();
-const product = productStore.getProductById(Number(route.params.id));
 
 </script>
 
@@ -72,6 +71,21 @@ p {
 	margin-top: 8px; /* Margin above description */
 }
 
+.add-to-cart-button {
+	display: inline-block;
+	margin-top: 16px; /* Space above the button */
+	padding: 10px 15px; /* Padding for the button */
+	background-color: #28a745; /* Button background color */
+	color: white; /* Button text color */
+	border: none;
+	border-radius: 5px; /* Rounded corners for button */
+	cursor: pointer;
+}
+
+.add-to-cart-button:hover {
+	background-color: #218838; /* Darker shade on hover */
+}
+
 .catalog-link {
 	display: inline-block;
 	margin-top: 16px; /* Space above the link */
@@ -85,4 +99,5 @@ p {
 
 .catalog-link:hover {
 	background-color: #0056b3; /* Darker shade on hover */
-}</style>
+}
+</style>
